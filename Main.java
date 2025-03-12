@@ -29,27 +29,56 @@ by which, Inheritance or Composition?
 Composition(Has-A relationship)
 */
 import java.io.File; //Import the File class to read files
-import java.io.FileNotFoundException;
+import java.io.FileNotFoundException; //Import this class to handle errors
 import java.io.FileWriter; //Import the FileWriter class to write to files
 import java.io.IOException; //Import the IOException class to handle errors
 import java.util.Scanner; //Import the Scanner class to read text files
 
-public class Main 
+public class Main
 {
-	public static void main(String[] args) 
-	{
-		try{
-			File inputTxtFile = new File("hr.txt"); // Create a File object
-			Scanner txtFileReader = new Scanner(inputTxtFile); // Create a Scanner object
-			txtFileReader.close(); // Close the scanner to avoid a resource leak
-		}
-		catch(FileNotFoundException e) {
+	public static void main(String[] args) {
+
+		try {
+			FileWriter fileWriterOrder = new FileWriter("outputfile.txt");
+			fileWriterOrder.write("testing");
+			fileWriterOrder.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 			System.out.println(e);
+			System.exit(1);
 		}
+	}
+	//Defines the person class
 	public class Person {
-			
+		private String name;
+		private int height;
+		private int weight;
+		//Constructor for the person class
+		public Person(String name, int height, int weight) {
+			this.name = name;
+			this.height = height;
+			this.weight = weight;
+		}
+		//Returns the string representation of the person class
+		@Override
+		public String toString() {
+			return "Person{name='" + this.name + "', height=" + height + ", weight=" + weight + "}";
+		}
+	}
+	// Defines the person list interface
+	public interface PersonList {
+		void add(Person new_person); // Adds a person to the list
+		Person get(int index); // Returns the person at the given index
 	}
 
+	class PersonSet implements PersonList {
+		private ArrayList<Person> personList;
+
+		public PersonSet() {
+			this.personList = new ArrayList<>();
+		}
+	}
+}
 		/*
 		// Don't overcomplicate the data
 		// reading. After skipping the
@@ -61,20 +90,5 @@ public class Main
 		double height = fileReader.nextDouble();
 		double weight = fileReader.nextDouble();
 		*/
-		
-		
-		
-		/*try
-		{	
-			FileWriter fileWriterOrder = new FileWriter("outputfile.txt");
-			fileWriterOrder.write("testing");
-			fileWriterOrder.close();
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-			System.out.println(e);
-			System.exit(1);
-		}*/
-	}
-}
+
+
